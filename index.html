@@ -15,102 +15,121 @@
     }
 
     .contenedor {
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
       padding: 40px 20px;
     }
 
-    /* FRASES */
+    /* FRASES GENERALES */
     .frase {
       margin: 60px 0;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       line-height: 2;
       font-style: italic;
     }
 
+    /* FRASES INTERMEDIAS (las que faltaban) */
     .frases-intermedias {
-      margin: 70px 0;
-      font-size: 1.3rem;
-      line-height: 2.2;
+      margin: 80px 0;
+      font-size: 1.35rem;
+      line-height: 2.3;
       font-style: italic;
     }
 
-    /* IMÁGENES */
+    /* GALERÍA */
+    .galeria {
+      margin: 50px 0;
+    }
+
     .galeria img {
       width: 100%;
       max-width: 420px;
       aspect-ratio: 9 / 16;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: 18px;
       margin: 25px 0;
       box-shadow: 0 0 25px rgba(255,255,255,0.08);
     }
 
-    /* VIDEOS */
     .galeria video {
       width: 100%;
       max-width: 420px;
       aspect-ratio: 9 / 16;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: 18px;
       margin: 25px 0;
       box-shadow: 0 0 25px rgba(255,255,255,0.08);
     }
 
     /* PREGUNTA FINAL */
     .pregunta {
-      margin-top: 80px;
-      font-size: 1.4rem;
+      margin-top: 90px;
+      font-size: 1.5rem;
+      font-style: italic;
     }
 
     .botones {
-      margin-top: 30px;
+      margin-top: 35px;
     }
 
     .botones button {
       background: transparent;
       border: 1px solid #f2f2f2;
       color: #f2f2f2;
-      padding: 10px 25px;
+      padding: 12px 30px;
       margin: 10px;
       font-size: 1rem;
       border-radius: 30px;
       cursor: pointer;
     }
 
+    .botones button:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
     .respuesta {
-      margin-top: 30px;
-      font-size: 1.3rem;
+      margin-top: 35px;
+      font-size: 1.35rem;
       display: none;
+      font-style: italic;
+      line-height: 2;
     }
   </style>
 </head>
 
 <body>
+
+  <!-- 🎵 MÚSICA -->
   <audio autoplay loop>
     <source src="musica.mp3" type="audio/mpeg">
   </audio>
 
   <div class="contenedor">
 
+    <!-- FRASES INICIALES -->
     <div class="frase">
       lo que fuimos,<br>
-      lo que somos,<br>
-      y lo que aún duele recordar.
+      lo que intentamos,<br>
+      y todo lo que aún vive en silencio.
     </div>
 
+    <!-- FOTOS -->
     <div class="galeria">
       <img src="imagenes/foto1.jpg">
       <img src="imagenes/foto2.jpg">
       <img src="imagenes/foto3.jpg">
+      <img src="imagenes/foto4.jpg">
+      <img src="imagenes/foto5.jpg">
     </div>
 
+    <!-- VIDEOS -->
     <div class="galeria">
       <video src="videos/video1.mp4" controls></video>
       <video src="videos/video2.mp4" controls></video>
+      <video src="videos/video3.mp4" controls></video>
     </div>
 
-    <!-- 💔 FRASES QUE FALTABAN -->
+    <!-- 💔 FRASES CLAVE (AGREGADAS, SIN QUITAR NADA) -->
     <div class="frases-intermedias">
       <p>y aun con todo...</p>
       <p>si pudiera elegir un día contigo,</p>
@@ -135,10 +154,12 @@
 
   </div>
 
+  <!-- SCRIPT -->
   <script>
     function mostrarRespuesta() {
       document.getElementById("respuesta").style.display = "block";
     }
   </script>
+
 </body>
 </html>
