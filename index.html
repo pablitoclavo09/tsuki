@@ -45,9 +45,6 @@ section {
     transform:translateY(0);
 }
 
-/* CLASE PARA DELAY */
-.fade-delay { transition-delay: 1s; }
-
 /* LUNA */
 .moon {
     width:300px;
@@ -245,9 +242,9 @@ h2 {
     </div>
 </section>
 
-<!-- NUEVAS FRASES CON DELAY -->
-<section><div class="fade fade-delay"><h2>y aun con todo...<br>si pudiera elegir un día contigo,</h2></div></section>
-<section><div class="fade fade-delay"><h2>elegiría ese.</h2></div></section>
+<!-- NUEVAS FRASES SIN DELAY -->
+<section><div class="fade"><h2>y aun con todo...<br>si pudiera elegir un día contigo,</h2></div></section>
+<section><div class="fade"><h2>elegiría ese.</h2></div></section>
 
 <!-- PREGUNTA FINAL -->
 <section>
@@ -264,10 +261,14 @@ h2 {
 </main>
 
 <script>
-/* FADE */
+/* FADE CON INTERSECTION OBSERVER NORMAL */
 const fades=document.querySelectorAll('.fade');
-const observer=new IntersectionObserver(e=>{
-  e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add('show'); });
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+        entry.target.classList.add('show');
+    }
+  });
 },{threshold:0.6});
 fades.forEach(f=>observer.observe(f));
 
