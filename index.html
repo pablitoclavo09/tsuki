@@ -1,165 +1,309 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>tsuki</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tsuki</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Georgia', serif;
-      background: #0b0b0f;
-      color: #f2f2f2;
-      text-align: center;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
-    .contenedor {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-    }
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; }
+body {
+    font-family:'Montserrat', sans-serif;
+    background:#000;
+    color:#f5f5f5;
+    overflow:hidden;
+}
 
-    /* FRASES GENERALES */
-    .frase {
-      margin: 60px 0;
-      font-size: 1.25rem;
-      line-height: 2;
-      font-style: italic;
-    }
+main {
+    height:100vh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+}
 
-    /* FRASES INTERMEDIAS (las que faltaban) */
-    .frases-intermedias {
-      margin: 80px 0;
-      font-size: 1.35rem;
-      line-height: 2.3;
-      font-style: italic;
-    }
+section {
+    height:100vh;
+    scroll-snap-align:start;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    text-align:center;
+    padding:40px;
+}
 
-    /* GALERÍA */
-    .galeria {
-      margin: 50px 0;
-    }
+.fade {
+    opacity:0;
+    transform:translateY(50px);
+    transition:all 1.8s ease;
+}
+.fade.show {
+    opacity:1;
+    transform:translateY(0);
+}
 
-    .galeria img {
-      width: 100%;
-      max-width: 420px;
-      aspect-ratio: 9 / 16;
-      object-fit: cover;
-      border-radius: 18px;
-      margin: 25px 0;
-      box-shadow: 0 0 25px rgba(255,255,255,0.08);
-    }
+/* LUNA */
+.moon {
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, #f8f8f8, #d5d5d5 40%, #a8a8a8 70%, #8a8a8a);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    filter: drop-shadow(0 0 50px rgba(255,255,255,0.2));
+}
+.moon span {
+    font-family:'Playfair Display', serif;
+    font-size:3rem;
+    letter-spacing:6px;
+    color:#a8c6e0;
+}
 
-    .galeria video {
-      width: 100%;
-      max-width: 420px;
-      aspect-ratio: 9 / 16;
-      object-fit: cover;
-      border-radius: 18px;
-      margin: 25px 0;
-      box-shadow: 0 0 25px rgba(255,255,255,0.08);
-    }
+.scroll {
+    margin-top:25px;
+    font-size:0.9rem;
+    opacity:0.6;
+    letter-spacing:2px;
+    color:#a8c6e0;
+}
 
-    /* PREGUNTA FINAL */
-    .pregunta {
-      margin-top: 90px;
-      font-size: 1.5rem;
-      font-style: italic;
-    }
+/* NIEBLA */
+.fog {
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1), transparent 60%);
+    filter:blur(40px);
+    animation:fogMove 90s linear infinite;
+    pointer-events:none;
+}
+@keyframes fogMove {
+    0% { transform:translate(-5%,-2%); }
+    50% { transform:translate(5%,2%); }
+    100% { transform:translate(-5%,-2%); }
+}
 
-    .botones {
-      margin-top: 35px;
-    }
+/* IMÁGENES VERTICALES */
+.image-section {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.image-bg {
+    width:420px;
+    height:720px;
+    max-width:90vw;
+    max-height:80vh;
+    border-radius:18px;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    filter:brightness(0.45);
+}
+.image-text {
+    position:absolute;
+    font-family:'Playfair Display', serif;
+    font-size:2rem;
+    padding:20px 30px;
+    background:rgba(0,0,0,0.45);
+    border-radius:12px;
+}
 
-    .botones button {
-      background: transparent;
-      border: 1px solid #f2f2f2;
-      color: #f2f2f2;
-      padding: 12px 30px;
-      margin: 10px;
-      font-size: 1rem;
-      border-radius: 30px;
-      cursor: pointer;
-    }
+/* VIDEOS RESPONSIVE */
+.video-section {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.video-container {
+    width:90%;
+    max-width:1400px;
+    display:flex;
+    gap:40px;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+.video-box {
+    flex:1;
+    max-width:550px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,0.9);
+}
+.video-box.rotated {
+    transform:rotate(-90deg);
+    transform-origin:center;
+}
+.video-box video {
+    width:100%;
+    height:auto;
+    display:block;
+    aspect-ratio:16/9;
+}
 
-    .botones button:hover {
-      background: rgba(255,255,255,0.08);
+/* CELULAR */
+@media (max-width: 768px) {
+    .video-container {
+        flex-direction:column;
     }
+    .video-box,
+    .video-box.rotated {
+        transform:none;
+        max-width:100%;
+    }
+}
 
-    .respuesta {
-      margin-top: 35px;
-      font-size: 1.35rem;
-      display: none;
-      font-style: italic;
-      line-height: 2;
-    }
-  </style>
+/* TEXTO */
+h2 {
+    font-family:'Playfair Display', serif;
+    font-size:2rem;
+    line-height:1.5;
+    padding:25px 40px;
+    background:rgba(0,0,0,0.2);
+    border-radius:8px;
+}
+
+/* BOTONES */
+.valentine-container {
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+.valentine-buttons {
+    display:flex;
+    gap:40px;
+    justify-content:center;
+}
+.valentine-btn {
+    padding:12px 28px;
+    font-size:1.2rem;
+    font-weight:600;
+    color:#fff;
+    background:linear-gradient(135deg,#ff6b81,#ff2e63);
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- 🎵 MÚSICA -->
-  <audio autoplay loop>
-    <source src="musica.mp3" type="audio/mpeg">
-  </audio>
+<main>
 
-  <div class="contenedor">
+<!-- 🎵 MÚSICA CON DETECCIÓN -->
+<audio id="music" loop autoplay>
+    <source src="audio/tsuki.mp3" type="audio/mpeg">
+</audio>
 
-    <!-- FRASES INICIALES -->
-    <div class="frase">
-      lo que fuimos,<br>
-      lo que intentamos,<br>
-      y todo lo que aún vive en silencio.
+<section>
+    <div class="fog"></div>
+    <div class="fade">
+        <div class="moon"><span>Tsuki</span></div>
+        <div class="scroll">desliza ↓</div>
     </div>
+</section>
 
-    <!-- FOTOS -->
-    <div class="galeria">
-      <img src="imagenes/foto1.jpg">
-      <img src="imagenes/foto2.jpg">
-      <img src="imagenes/foto3.jpg">
-      <img src="imagenes/foto4.jpg">
-      <img src="imagenes/foto5.jpg">
+<section><div class="fade"><h2>No sé en qué momento empezó…</h2></div></section>
+<section><div class="fade"><h2>…pero desde entonces, hay días que llevan tu nombre.</h2></div></section>
+<section><div class="fade"><h2>A veces pienso en lo que fuimos,</h2></div></section>
+<section><div class="fade"><h2>en lo que somos,</h2></div></section>
+<section><div class="fade"><h2>y en todo lo que todavía no nos atrevemos a decir.</h2></div></section>
+
+<!-- FRASES INTERMEDIAS AGREGADAS -->
+<section><div class="fade"><h2>y aun con todo...</h2></div></section>
+<section><div class="fade"><h2>si pudiera elegir un día contigo,</h2></div></section>
+<section><div class="fade"><h2>elegiría ese</h2></div></section>
+
+<!-- IMÁGENES -->
+<section class="image-section">
+    <div class="image-bg" id="img1"></div>
+    <div class="fade image-text">hay recuerdos</div>
+</section>
+<section class="image-section">
+    <div class="image-bg" id="img2"></div>
+    <div class="fade image-text">que no se olvidan</div>
+</section>
+<section class="image-section">
+    <div class="image-bg" id="img3"></div>
+    <div class="fade image-text">solo aprenden a doler</div>
+</section>
+<section class="image-section">
+    <div class="image-bg" id="img4"></div>
+    <div class="fade image-text">bonito</div>
+</section>
+
+<!-- VIDEOS -->
+<section class="video-section">
+    <div class="fade video-container">
+        <div class="video-box"><video id="video1" autoplay muted loop playsinline></video></div>
+        <div class="video-box rotated"><video id="video2" autoplay muted loop playsinline></video></div>
     </div>
+</section>
 
-    <!-- VIDEOS -->
-    <div class="galeria">
-      <video src="videos/video1.mp4" controls></video>
-      <video src="videos/video2.mp4" controls></video>
-      <video src="videos/video3.mp4" controls></video>
+<!-- PREGUNTA FINAL -->
+<section>
+  <div class="fade valentine-container">
+    <h2>¿Me permitirías volver a ser tu San Valentín, este año?</h2>
+    <div class="valentine-buttons">
+      <button class="valentine-btn" id="btnYes">Sí</button>
+      <button class="valentine-btn" id="btnNo">No</button>
     </div>
-
-    <!-- 💔 FRASES CLAVE (AGREGADAS, SIN QUITAR NADA) -->
-    <div class="frases-intermedias">
-      <p>y aun con todo...</p>
-      <p>si pudiera elegir un día contigo,</p>
-      <p>elegiría ese</p>
-    </div>
-
-    <!-- ❓ PREGUNTA FINAL -->
-    <div class="pregunta">
-      ¿te quedarías un rato más?
-    </div>
-
-    <div class="botones">
-      <button onclick="mostrarRespuesta()">sí</button>
-      <button onclick="mostrarRespuesta()">siempre</button>
-    </div>
-
-    <div class="respuesta" id="respuesta">
-      entonces quédate,<br>
-      aunque sea aquí,<br>
-      aunque sea un momento más.
-    </div>
-
+    <div id="response" style="margin-top:25px;font-size:1.5rem;color:#a8c6e0;"></div>
   </div>
+</section>
 
-  <!-- SCRIPT -->
-  <script>
-    function mostrarRespuesta() {
-      document.getElementById("respuesta").style.display = "block";
-    }
-  </script>
+</main>
+
+<script>
+/* FADE */
+const fades=document.querySelectorAll('.fade');
+const observer=new IntersectionObserver(e=>{
+  e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add('show'); });
+},{threshold:0.6});
+fades.forEach(f=>observer.observe(f));
+
+/* MÚSICA AUTOPLAY */
+window.addEventListener('load',()=>{
+  const audio=document.getElementById('music');
+  audio.volume=0.7;
+  audio.play().catch(()=>{
+    const resume=()=>{audio.play(); document.removeEventListener('click',resume);}
+    document.addEventListener('click',resume);
+  });
+});
+
+/* IMÁGENES */
+const imagePaths={
+  img1:'imagenes/imagen1.jpg',
+  img2:'imagenes/imagen2.jpg',
+  img3:'imagenes/imagen3.jpg',
+  img4:'imagenes/imagen4.jpg'
+};
+Object.keys(imagePaths).forEach(id=>{
+  document.getElementById(id).style.backgroundImage=`url('${imagePaths[id]}')`;
+});
+
+/* VIDEOS */
+video1.src='videos/video1.mp4';
+video2.src='videos/video2.mp4';
+
+/* RESPUESTAS */
+btnYes.onclick=()=>{
+  response.textContent="Gracias por elegirme otra vez. Prometo cuidar y atesorar este día... al igual que a ti";
+  response.style.color="#ff6b81";
+};
+btnNo.onclick=()=>{
+  response.textContent="Está bien. Gracias por tomarte el tiempo de llegar hasta aquí, te amo mucho y sé que lo seguiré haciendo por mucho tiempo, porque tu persona, tu piel, tu pensamiento y tu ser, se quedaron no solo en mi cabeza, sino en mi piel y en mi alma, como un tatuaje, solo que sin tinta";
+  response.style.color="#a8c6e0";
+};
+</script>
 
 </body>
 </html>
